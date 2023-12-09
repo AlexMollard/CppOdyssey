@@ -9,6 +9,8 @@ has_children: true
 
 This catagory contains guides on setting up c++ projects with various build systems.
 
+---
+
 ## Visual Studio
 
 Visual Studio is a popular IDE for Windows. It is the most popular IDE for C++ development on Windows.
@@ -26,6 +28,8 @@ Visual Studio is a popular IDE for Windows. It is the most popular IDE for C++ d
 - [Visual Studio C++ Tutorial](https://docs.microsoft.com/en-us/cpp/build/vscpp-step-1-create?view=vs-2019)
 - [Visual Studio CMake Tutorial](https://docs.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view=vs-2019)
 
+---
+
 ## CMake
 
 CMake is a cross-platform build system generator. It is used to generate build files for a variety of build systems, including Makefiles, Ninja, and Visual Studio. CMake is the most popular build system for C++ projects.
@@ -37,6 +41,8 @@ CMake is a cross-platform build system generator. It is used to generate build f
 ### CMake Guides
 
 - [CMake Tutorial](https://cmake.org/cmake/help/latest/guide/tutorial/index.html)
+
+---
 
 ## Make
 
