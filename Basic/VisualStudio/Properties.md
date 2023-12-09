@@ -13,11 +13,11 @@ It can also be accessed from the Project menu after you have selected which proj
 
 | Solution Explorer | Project Menu |
 |-------------------|--------------|
-|![Visual Studio Project Properties]({{site.baseurl}}res/VisualStudioProjectProperties.png)|![Visual Studio Project Properties Menu](res/VisualStudioProjectPropertiesMenu.png) |
+|![Visual Studio Project Properties]({{site.url}}/assets/VisualStudioProjectProperties.png)|![Visual Studio Project Properties Menu]({{site.url}}/assets/VisualStudioProjectPropertiesMenu.png) |
 
 You should see a window that looks like this:
 
-![Visual Studio Project Properties Window]({{site.baseurl}}res/VisualStudioProjectPropertiesWindow.png)
+![Visual Studio Project Properties Window]({{site.url}}/assets/VisualStudioProjectPropertiesWindow.png)
 
 ## Before you start
 
@@ -27,7 +27,7 @@ But I have seen alot of people edit just the debug and add libraries to only the
 
 For this guide, we will be editing the Debug configuration.
 
-![Visual Studio Project Properties Configuration]({{site.baseurl}}res/VisualStudioProjectPropertiesConfiguration.png)
+![Visual Studio Project Properties Configuration]({{site.url}}/assets/VisualStudioProjectPropertiesConfiguration.png)
 
 ## Properties
 
