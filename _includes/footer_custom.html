@@ -1,37 +1,8 @@
-<!--Disqus custom CSS-->
-
-<style type="text/css">
-    :root {
-        color-scheme: dark;
-    }
-
-    #disqus_thread {
-        padding: 15px;
-        border-radius: 5px;
-        background-color: #fff;
-    }
-</style>
-
-
 <h1>Comments</h1>
-<div id="disqus_thread"></div>
-<!--Include the Disqus JavaScript widget-->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = 'cppodyssey';
-    var disqus_config = function () {
-        this.page.url = "{{ site.url }}";
-        this.page.identifier = "{{ page.url }}";
-    };
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function () {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
+<script src="https://utteranc.es/client.js"
+        repo="AlexMollard/CppOdyssey"
+        issue-term="pathname"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
-        Disqus.</a></noscript>
