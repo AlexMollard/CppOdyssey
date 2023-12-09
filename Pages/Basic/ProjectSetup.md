@@ -42,17 +42,3 @@ CMake is a cross-platform build system generator. It is used to generate build f
 ### CMake Guides
 
 - [CMake Tutorial](https://cmake.org/cmake/help/latest/guide/tutorial/index.html)
-
----
-
-## Make
-
-Make is a build system that is used to build projects on Linux and Mac. It is the default build system for many Linux distributions.
-
-### Make Resources
-
-- [GNU Make Manual](https://www.gnu.org/software/make/manual/make.html)
-
-### Make Guides
-
-- [Make Tutorial](https://makefiletutorial.com/)

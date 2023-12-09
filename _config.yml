@@ -23,3 +23,6 @@ callouts:
   tip:
     title: Tip
     color: green
+
+mermaid:
+  version: "9.1.3"
