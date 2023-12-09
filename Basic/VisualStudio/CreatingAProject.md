@@ -3,7 +3,7 @@ layout: default
 nav_order: 2
 parent: Visual Studio
 grand_parent: Project Setup
-title: Creating a Project
+title: Creating a VS Project
 ---
 
 # Creating a Project
@@ -25,5 +25,3 @@ Now you want to give your project a name, and then click the create button. (Don
 ## Done
 
 Now you have created your first project in visual studio. You can now start writing code for your project.
-
----
