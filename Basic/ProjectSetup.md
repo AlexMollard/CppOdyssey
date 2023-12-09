@@ -3,6 +3,7 @@ layout: default
 title: Project Setup
 nav_order: 2
 has_children: true
+comments: true
 ---
 
 # Project Setup
