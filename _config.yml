@@ -5,6 +5,6 @@ theme: just-the-docs
 url: https://just-the-docs.github.io
 
 aux_links:
-  Template Repository: https://github.com/AlexMollard
+  GitHub: https://github.com/AlexMollard
 
 color_scheme: dark
