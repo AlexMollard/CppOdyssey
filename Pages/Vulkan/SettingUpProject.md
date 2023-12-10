@@ -54,32 +54,31 @@ C:\...\MyProject\x64\Debug\MyProject.exe (process *) exited with code 0.
 
 ## Visual Studio
 
-Assuming you already have a project set up, you will need to add the Vulkan SDK to your project.
-In the guide below we are going to use `VC++ Directories` instead of the typical `Additional Include Directories` and `Additional Library Directories` this way we can add the Vulkan SDK to all configurations and platforms at once.
-
-{: .note }
-You can do the following steps in the linker settings if you want the only difference being is that when you use `VC++ Directories` you are telling the compiler where to look for header files and libraries, and when you use the linker settings you are telling the linker where to look for libraries.
+Assuming you already have a project that builds, we will now add all the properties needed to start using the Vulkan SDK.
 
 ### Adding the Vulkan SDK to your project
 
 1. Open your project in the `Solution Explorer`.
 2. Access `Properties` by right-clicking on your project.
-3. Go to `VC++ Directories`.
-   - For `Include Directories`:
-     - Open the dropdown menu.
-     - Select `Edit`.
-     - Add a new line with `$(VULKAN_SDK)\Include`.
-     - Confirm with `OK`.
-   - For `Library Directories`:
-     - Open the dropdown menu.
-     - Select `Edit`.
-     - Add a new line with `$(VULKAN_SDK)\Lib`.
-     - Confirm with `OK`.
-4. Go to `Linker > Input`.
-   - For `Additional Dependencies`.
-     - Select `Edit`.
-     - Add a new line with `vulkan-1.lib`.
-     - Confirm with `OK`.
+3. Go to `C/C++`.
+   - In `General`:
+     - For `Additional Include Directories`:
+       - Open the dropdown menu.
+       - Select `Edit`.
+       - Add a new line with `$(VULKAN_SDK)\Include`.
+       - Confirm with `OK`.
+4. Go to `Linker`.
+   - In `General`:
+     - For `Additional Library Directories`:
+       - Open the dropdown menu.
+       - Select `Edit`.
+       - Add a new line with `$(VULKAN_SDK)\Lib`.
+       - Confirm with `OK`.
+   - In `Input`:
+     - For `Additional Dependencies`.
+       - Select `Edit`.
+       - Add a new line with `vulkan-1.lib`.
+       - Confirm with `OK`.
 5. Confirm with `OK`.
 
 {: .note }
