@@ -52,6 +52,10 @@ E[Command Queue] --> F[GPU]
 
 As you can see, Vulkan can use multiple CPU cores to build command buffers, which means that it can build command buffers faster than OpenGL.
 
-But surely OpenGL has its advantages over Vulkan?
+---
 
-Well, yes it does. OpenGL is easier to use than Vulkan, and it is supported on more platforms than Vulkan.
+## Why not just use DirectX 3D?
+
+DirectX 3D is only supported on `Windows`, which means that it cannot be used on `Linux`, `Mac OS X`, `Android`, `IOS`, or `Nintendo Switch`.
+
+Whilst yes you can use DirectX 3D on `Linux` and `Mac OS X` using `Wine` or `Proton`, it is not officially supported by Microsoft, and it is not guaranteed to work.
