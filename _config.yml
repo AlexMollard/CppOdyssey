@@ -7,6 +7,8 @@ url: https://alexmollard.github.io
 aux_links:
   GitHub: https://github.com/AlexMollard
 
+enable_copy_code_button: true
+
 color_scheme: dark
 
 # Footer last edited timestamp
