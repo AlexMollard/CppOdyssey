@@ -7,7 +7,7 @@ nav_order: 3
 
 # Instance
 
-The Vulkan instance is the first thing that you need to create when using Vulkan, and it is the last thing that you need to destroy when you are done using Vulkan. (FIFO - First In First Out)
+The Vulkan Instance refers to the foremost structure necessary when initiating a Vulkan application. It not only encapsulates application-level resources but also interfaces with both the operating system and the hardware. It's crucial to note that it's the initial step in using Vulkan, as it is responsible for dispatching commands to physical devices or GPUs.
 
 ## Creating the Vulkan instance
 
@@ -56,9 +56,13 @@ But below is a list of all the fields in the `VkInstanceCreateInfo` struct.
 
 ## Layers
 
-Layers are used to add extra functionality to Vulkan, such as validation layers which are used to validate the use of Vulkan.
+Primarily, layers serve to extend Vulkan's core capabilities. One such layer type, called 'Validation Layer', acts as a real-time debugging tool for developers. This layer is instrumental in verifying whether your code aligns with the Vulkan APIs specification or not. The outcome of this check can ascertain the stability and efficiency of your Vulkan-based applications.
 
-This is a big difference between Vulkan and OpenGL, because OpenGL does not have layers, Having these validation layers is very useful when debugging your Vulkan application and making sure you are following the Vulkan specification for best performance and stability.
+In addition to error detection, Validation Layers can also provide valuable insights into performance bottlenecks and potential optimizations. Such insights become crucial when you aim to enhance your application's performance.
+
+When it comes to graphics programming, each detail matters. Leveraging validation layers from Vulkan will not just improve the robustness and speed of your application, but also ensure that any deviations from the norm are promptly identified and rectified.
+
+Thus, Vulkan's Layers offer a streamlined approach to debug and optimize your application, making them an insightful component of the Vulkan toolkit.
 
 ### Setting up validation layers
 
@@ -118,11 +122,13 @@ The `enabledLayerCount` field is the number of layers to enable, and the `ppEnab
 
 ## Extensions
 
-Extensions are used to add extra functionality to Vulkan, such as the `VK_KHR_surface` extension which is used to create a surface to render to.
+Vulkan extensions, as the name suggests, are added to the Vulkan API to extend its core functionality. These can provide several benefits such as access to new hardware features or software functionalities that were not originally present in the Vulkan standard.
 
-Typically you would use extensions to add platform specific functionality to Vulkan, such as the `VK_KHR_win32_surface` extension which is used to create a surface on `Windows`.
+A prime example of such an extension is the `VK_KHR_surface`. It does not merely add "extra functionality" but plays a crucial role in creating a renderable surface within a windowing system. This is fundamental for applications aiming for rendering graphics on screen.
 
-If you are using a windowing library such as `GLFW` or `SDL` you do not need to worry about extensions, because these libraries will handle the extensions for you.
+It's also worth noting that Vulkan extensions can be utilized to bridge the gap between Vulkan's platform-agnostic nature and specific platform requirements. The `VK_KHR_win32_surface` extension, for instance, is designed specifically for Windows. It provides functionalities necessary for creating surfaces on Windows systems, thereby ensuring smooth functioning of Vulkan-based applications on this widely used operating system.
+
+While working with popular windowing libraries like `GLFW` or `SDL`, developers may not have to actively manage these extensions. That's because these libraries abstract away much of the intricacies related to extensions. They handle the loading and management of appropriate extensions based on the target platform, allowing developers to focus more on their actual application logic rather than worrying about compatibility details. Therefore, while it's essential to understand what extensions do, in practice you often don't need to interact directly with them when using such libraries.
 
 ### Setting up extensions
 
@@ -327,7 +333,7 @@ int main()
 ```
 
 {: .note }
-I have changed the code slightly from the previous examples, I have added a `createInstance` function and moved the code that creates the Vulkan instance into that function to help split up the code to follow the single responsibility principle. This will become more important as the code gets more complex.
+I've modified the code by introducing a `createInstance` function and relocating the Vulkan instance creation code within it. This separation adheres to the single responsibility principle, which becomes increasingly crucial as the code complexity grows.
 
 ## Next Steps
 
