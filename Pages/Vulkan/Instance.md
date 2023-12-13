@@ -7,7 +7,21 @@ nav_order: 3
 
 # Instance
 
+```mermaid
+graph LR;
+  A{Instance} --> B[Devices];
+  B --> C[Swap Chain];
+  C --> D[Image Views];
+  D --> E[Render Pass];
+  F[Pipelines];
+  F --> G[Framebuffers];
+  G --> H[Command Pool/Buffers];
+  H --> I[Synchronization];
+```
+
 The Vulkan Instance refers to the foremost structure necessary when initiating a Vulkan application. It not only encapsulates application-level resources but also interfaces with both the operating system and the hardware. It's crucial to note that it's the initial step in using Vulkan, as it is responsible for dispatching commands to physical devices or GPUs.
+
+---
 
 ## Creating the Vulkan instance
 
@@ -53,6 +67,8 @@ But below is a list of all the fields in the `VkInstanceCreateInfo` struct.
 | `ppEnabledLayerNames` | A pointer to an array of layer names to enable, or `nullptr` |
 | `enabledExtensionCount` | The number of extensions to enable |
 | `ppEnabledExtensionNames` | A pointer to an array of extension names to enable, or `nullptr` |
+
+---
 
 ## Layers
 
@@ -119,6 +135,8 @@ createInfo.ppEnabledLayerNames = validationLayers.data();
 
 {: .note }
 The `enabledLayerCount` field is the number of layers to enable, and the `ppEnabledLayerNames` field is a pointer to an array of layer names to enable.
+
+---
 
 ## Extensions
 
@@ -188,6 +206,8 @@ createInfo.ppEnabledExtensionNames = extensions.data();
 {: .note }
 The `enabledExtensionCount` field is the number of extensions to enable, and the `ppEnabledExtensionNames` field is a pointer to an array of extension names to enable.
 
+---
+
 ## Destroying the Vulkan instance
 
 To destroy the Vulkan instance you need to call `vkDestroyInstance`.
@@ -198,6 +218,8 @@ vkDestroyInstance(instance, nullptr);
 
 {: .note }
 This should be the last thing that you do when using Vulkan. Typically you would destroy the Vulkan instance when the program exits.
+
+---
 
 ## Full code
 
@@ -334,6 +356,8 @@ int main()
 
 {: .note }
 I've modified the code by introducing a `createInstance` function and relocating the Vulkan instance creation code within it. This separation adheres to the single responsibility principle, which becomes increasingly crucial as the code complexity grows.
+
+---
 
 ## Next Steps
 
