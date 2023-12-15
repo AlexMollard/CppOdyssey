@@ -1,0 +1,4 @@
+{
+    "cppbuild.isEnabled": false,
+    "sarif-viewer.connectToGithubCodeScanning": "off"
+}

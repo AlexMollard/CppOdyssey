@@ -306,7 +306,7 @@ bool checkExtensionSupport()
     return true;
 }
 
-void createInstance()
+VkInstance createInstance()
 {
     if (enableValidationLayers && !checkValidationLayerSupport())
     {
@@ -344,11 +344,13 @@ void createInstance()
     {
         throw std::runtime_error("failed to create instance!");
     }
+
+    return instance;
 }
 
 int main()
 {
-    createInstance();
+    VkInstance instance = createInstance();
 
     return 0;
 }
