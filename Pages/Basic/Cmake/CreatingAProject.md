@@ -50,7 +50,6 @@ This cmake file is expecting a file called `src/main.cpp` to be in the root dire
 
 This file tells cmake that the minimum version of cmake that is required to build this project is version 3.0, and that the project is called MyProject. It also tells cmake that the project has an executable called MyProject, and that the source file for the executable is `src/main.cpp`.
 
-{: .note }
 ---
 
 ## Generating Project Files
