@@ -39,8 +39,6 @@ In conclusion, while OpenGL does permit multi-threaded operations, it is only pr
 
 ### Diagrams
 
-Certainly, here's a more detailed comparison of Vulkan and OpenGL based on the way they handle command buffers and GPUs.
-
 Firstly, let's see how OpenGL works:
 
 ```mermaid
