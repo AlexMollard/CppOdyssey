@@ -150,12 +150,14 @@ const std::vector<const char*> deviceExtensions = {
 
 const std::vector<const char*> validationLayers =
 {
-	"VK_LAYER_KHRONOS_validation"
+	 "VK_LAYER_KHRONOS_validation"
 };
 
 const std::vector<const char*> extensions =
 {
-	"VK_KHR_surface"
+	VK_KHR_SURFACE_EXTENSION_NAME,
+	"VK_KHR_win32_surface",
+	VK_EXT_DEBUG_UTILS_EXTENSION_NAME
 };
 
 #ifdef NDEBUG
@@ -172,6 +174,51 @@ struct QueueFamilyIndices {
 		return graphicsFamily.has_value() && presentFamily.has_value();
 	}
 };
+
+std::map<VkDebugUtilsMessageTypeFlagsEXT, std::string> messageTypeMap = {
+	{VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT, "GENERAL"},
+	{VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT, "VALIDATION"},
+	{VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT, "PERFORMANCE"},
+};
+
+std::map<VkDebugUtilsMessageSeverityFlagBitsEXT, std::string> messageSeverityMap = {
+	{VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT, "VERBOSE"},
+	{VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT, "INFO"},
+	{VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT, "WARNING"},
+	{VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT, "ERROR"},
+};
+
+void handleMessageType(VkDebugUtilsMessageTypeFlagsEXT messageType) {
+	std::cout << "TYPE: ";
+   
+	for (const auto& type : messageTypeMap) {
+		if (messageType & type.first)
+			std::cout << type.second << std::endl;
+	}
+}
+
+void handleMessageSeverity(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity) {
+	std::cout << "SEVERITY: ";
+
+	for (const auto& severity : messageSeverityMap) {
+		if (messageSeverity & severity.first)
+			std::cout << severity.second << std::endl;
+	}
+}
+
+VkBool32 callBackFunc(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType,
+	const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
+{
+	handleMessageType(messageType);
+	handleMessageSeverity(messageSeverity);
+   
+	std::cout << "validation layer: " << pCallbackData->pMessage << std::endl;
+
+	if (messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)
+		DebugBreak();
+
+	return VK_FALSE;
+}
 
 bool checkValidationLayerSupport()
 {
@@ -248,13 +295,6 @@ VkInstance CreateInstance()
 	appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
 	appInfo.apiVersion = VK_API_VERSION_1_3;
 
-	// The only extension we need is the surface extension (VK_KHR_win32_surface)
-	std::vector<const char*> extensions;
-	extensions.push_back(VK_KHR_SURFACE_EXTENSION_NAME);
-	extensions.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
-
-
-
 	VkInstanceCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 	createInfo.pApplicationInfo = &appInfo;
@@ -277,6 +317,40 @@ VkInstance CreateInstance()
 	if (result != VK_SUCCESS)
 	{
 		throw std::runtime_error("failed to create instance!");
+	}
+
+	if (!enableValidationLayers)
+	{
+		return instance;
+	}
+
+	// Setup the debug messenger
+	VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo = {};
+	debugCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+	debugCreateInfo.messageSeverity =
+		VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT |
+		VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+		VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT;
+	debugCreateInfo.messageType =
+		VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
+		VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
+		VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+	debugCreateInfo.pfnUserCallback = callBackFunc;
+	debugCreateInfo.pUserData = nullptr;
+
+	auto CreateDebugUtilsMessengerEXT = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+
+	if (CreateDebugUtilsMessengerEXT == nullptr)
+	{
+		throw std::runtime_error("Vulkan validation layers requested, but not available!");
+	}
+
+	VkDebugUtilsMessengerEXT debugMessenger;
+	result = CreateDebugUtilsMessengerEXT(instance, &debugCreateInfo, nullptr, &debugMessenger);
+
+	if (result != VK_SUCCESS)
+	{
+		throw std::runtime_error("Failed to create Vulkan debug messenger!");
 	}
 
 	return instance;
@@ -485,7 +559,6 @@ int main() {
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-
 
 	// Destroy the logical device
 	vkDestroyDevice(device, nullptr);
