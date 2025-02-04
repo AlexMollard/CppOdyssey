@@ -4,6 +4,8 @@ nav_order: 3
 parent: Visual Studio
 grand_parent: Project Setup
 title: Project Properties
+description: A comprehensive guide to Visual Studio project properties and configuration
+last_modified_date: 2025-02-05
 ---
 
 # Project Properties
@@ -11,71 +13,62 @@ title: Project Properties
 Project properties are settings that control how your project is built. They are stored in the project file, which has the extension `.vcxproj`. You can edit the project properties by right-clicking on the project in the Solution Explorer and selecting Properties.
 It can also be accessed from the Project menu after you have selected which project you wish to edit.
 
-| Solution Explorer | Project Menu |
-|-------------------|--------------|
-|![Visual Studio Project Properties](../../../assets/VisualStudioProjectProperties.png)|![Visual Studio Project Properties Menu](../../../assets/VisualStudioProjectPropertiesMenu.png) |
+| Access Method | Screenshot |
+|--------------|------------|
+| Solution Explorer | ![Project Properties access via Solution Explorer](../../../assets/VisualStudioProjectProperties.png) |
+| Project Menu | ![Project Properties access via Project Menu](../../../assets/VisualStudioProjectPropertiesMenu.png) |
 
 You should see a window that looks like this:
 
-![Visual Studio Project Properties Window](../../../assets/VisualStudioProjectPropertiesWindow.png)
+![Project Properties Window showing configuration options](../../../assets/VisualStudioProjectPropertiesWindow.png)
 
-## Before you start
+## Before You Start
 
-Before you start editing the project properties, you should make sure that you have the correct configuration selected. You can do this by clicking on the dropdown menu at the top of the window and selecting the configuration you want to edit.
-In most cases, you will want to edit the Debug configuration, as this is the configuration that is used when you are debugging your project.
-But I have seen alot of people edit just the debug and add libraries to only the debug config so when they try build for release or even x86 they get errors.
+Before editing the project properties, ensure you have the correct configuration selected. Click on the dropdown menu at the top of the window to select the configuration you want to edit.
+Most developers work primarily with the Debug configuration during development.
+However, a common mistake is adding libraries only to the Debug configuration, leading to errors when building Release or x86 versions.
 
-For this guide, we will be editing the Debug configuration.
+For this guide, we will focus on the Debug configuration.
 
-![Visual Studio Project Properties Configuration](../../../assets/VisualStudioProjectPropertiesConfiguration.png)
+![Configuration selector in Project Properties](../../../assets/VisualStudioProjectPropertiesConfiguration.png)
 
-## Properties
+## Properties Overview
 
-There are alot of properties that you can edit, but we will only be covering the most important ones. If I havent listed a property that you can see in the project properties window, then you can safely ignore it. or you can look it up in the [Visual Studio Documentation](https://docs.microsoft.com/en-us/visualstudio/).
+While there are numerous properties available, we'll cover the most essential ones. For properties not listed here, consult the [Visual Studio Documentation](https://docs.microsoft.com/en-us/visualstudio/ide/reference/project-properties-reference).
 
-### General
+### General Properties
 
 | Property | Description |
 |----------|-------------|
-| Configuration Type | Determines the output type of your project:<br>• Static Library (.lib) - Linked directly into executables<br>• Dynamic Library (.dll) - Loaded at runtime<br>• Application (.exe) - Executable program |
-| Windows SDK Version | Sets the Windows SDK version for compilation:<br>• Latest - Uses most recent installed SDK<br>• Specific versions (e.g., 10.0.19041.0) - For targeting specific Windows versions |
-| Platform Toolset | Selects the compiler toolchain:<br>• MSVC (Default) - Microsoft's native compiler<br>• Clang/LLVM - Alternative compiler with enhanced diagnostics<br>• Intel C++ - Optimized for Intel processors |
-| C++ and C Language Standard | Controls language feature availability:<br>• C++: 14 (Default), 17, 20, 23<br>• C: C17 (Default), C11, C99 |
+| Configuration Type | Decides what kind of program you're making. Think of it like choosing between making a LEGO piece that connects to other pieces (Static Library), a plugin that can be swapped in and out (Dynamic Library), or a complete standalone program (Application). Your choice here affects how others can use your code and how you'll distribute it. |
+| Windows SDK Version | This is like choosing which version of Windows you want your program to work with. Newer versions give you access to newer Windows features but might not work on older Windows computers. If you want your program to work on older Windows versions, pick an older SDK. Most new projects should use "Latest". |
+| Platform Toolset | This is picking which "workshop" of tools you'll use to build your program. The default (MSVC) is like using Microsoft's official toolkit. Clang is like using a different brand that sometimes gives clearer error messages. Your choice here affects how your code gets turned into a program and what kind of error messages you'll see. |
+| C++ and C Language Standard | This is like choosing which "edition" of C++ you want to use. Newer versions (like C++20) give you fancy new features but might not work with older compilers. Think of it like choosing between an older, widely-supported version of Word vs a newer version with cool features that not everyone can open. |
+
+#### Configuration Types
+- Static Library (.lib)
+  - Linked directly into executables
+  - Increases executable size
+  - No runtime dependencies
+  - Ideal for small, self-contained libraries
+
+- Dynamic Library (.dll)
+  - Loaded at runtime
+  - Independent updates possible
+  - Reduces executable size
+  - Requires distribution with application
+
+- Application (.exe)
+  - Standalone executable
+  - Can depend on static or dynamic libraries
+  - Requires `main()` or `WinMain()` entry point
 
 {: .note }
 Configuration Type affects how your code is built and distributed. Static libraries are embedded in executables, while DLLs are separate files loaded at runtime.
 
-### Configuration Type Details
-
-#### Static Library (.lib)
-- Linked directly into the final executable
-- Increases executable size
-- No runtime dependencies
-- Good for small, self-contained libraries
-
-{: .note }
-Static libraries increase executable size but eliminate DLL dependency management.
-
-#### Dynamic Library (.dll)
-- Loaded at runtime
-- Can be updated independently
-- Reduces executable size
-- Must be distributed with application
-
-{: .warning }
-DLLs require careful version management and proper distribution with your application.
-
-#### Application (.exe)
-- Standalone executable
-- Can depend on static or dynamic libraries
-- Entry point requires `main()` or `WinMain()`
-
 ### Platform and Standards
 
-{: .note }
-Clang often provides more detailed and clearer error messages compared to MSVC.
-
-#### Language Standard Selection
+#### Language Standard Options
 - C++14 - Base standard, widely supported
 - C++17 - Adds filesystem, optional, variant
 - C++20 - Adds concepts, ranges, coroutines
@@ -86,158 +79,85 @@ Using newer language standards might limit compatibility with older compilers an
 
 #### SDK Version Guidelines
 - Use "Latest" for new projects
-- Specify exact version when targeting older Windows versions
-- Consider minimum supported Windows version for deployment
+- Specify exact version for older Windows targets
+- Consider minimum supported Windows version
 
 {: .note }
 The Windows SDK version affects which Windows APIs are available to your application.
 
-### VCPKG
-
-VCPKG is a package manager for C++ libraries. It is used to install libraries that are not included with Visual Studio. If it was not correctly installed with Visual studio you can install VCPKG from the [VCPKG GitHub Repository](https://github.com/microsoft/vcpkg).
+### VCPKG Integration
 
 | Property | Description |
 |----------|-------------|
-| Use VCPKG Manifest | This property determines whether or not you are using a VCPKG manifest file. A VCPKG manifest file is a file that contains a list of libraries that you want to install with VCPKG. This will mean that when you build your project, VCPKG will automatically install the libraries that you have specified in the manifest file, Useful if you don't wish to manage all your dependencies yourself. |
-| Use Static Libraries | This property determines whether or not you are using static libraries. A static library is a library that is linked to your project at compile time. This means that you don't need to distribute the library with your project. This is generally the best option for most projects. |
+| Use VCPKG Manifest | Enables automatic library installation via manifest file |
+| Use Static Libraries | Links libraries statically at compile time |
 
-### C/C++ > General
+VCPKG is a package manager for C++ libraries. If not installed with Visual Studio, you can get it from the [VCPKG Repository](https://github.com/microsoft/vcpkg).
 
-## General Settings
+### C/C++ Configuration
+
+#### General Settings
 
 | Property | Description |
 |----------|-------------|
-| Additional Include Directories | Specifies directories to include when compiling your project. Useful for including header files located outside the source folder, such as library dependencies. |
-| Debug Information Format | Controls the debug information output format. Options include: <br>• Program Database (PDB) - Default format, compatible with MSVC compiler<br>• Portable Database - Compatible with multiple compilers but may cause linking errors with MSVC |
-| Support Just My Code Debugging | Enables debugging of your code while skipping through library code. Particularly useful when working with third-party libraries without source code access. |
-| Warning Level | Sets compiler warning severity:<br>• Level 3 (Default) - Most strict, recommended<br>• Level 1 - Least strict<br>• Levels 2 and 4 also available |
-| SDL Checks | Security Development Lifecycle checks help identify security vulnerabilities and coding issues. Enabled by default and recommended for secure code development. |
-| Multi-processor Compilation | Utilizes multiple CPU cores during compilation to improve build speed. |
+| Additional Include Directories | Think of this like telling your program where to find its "instruction manuals" (header files). If you're using external libraries, you'll need to tell Visual Studio where these files are on your computer. For example, if you're using SDL2, you'd add the folder where SDL2's headers are stored. Without this, your program won't know how to use the library! |
+| Debug Information Format | This is like choosing how detailed your program's "map" should be when you're trying to find bugs. Program Database (PDB) is the most common choice - it helps Visual Studio show you exactly where problems are in your code when something goes wrong. Without this, finding bugs becomes like searching in the dark. |
+| Support Just My Code Debugging | When turned on, this lets you focus on debugging your own code while skipping over library code. It's like having a "fast forward" button that jumps past all the complex library stuff when you're trying to find a bug in your code. Super helpful when you're learning! |
+| Warning Level | This controls how picky Visual Studio should be about potential problems in your code. Level 4 is like having a really strict teacher who points out every little thing that could be improved. Level 1 is more relaxed but might miss important issues. For beginners, Level 3 is a good balance. |
+| SDL Checks | These are security checks that help prevent common programming mistakes that hackers could exploit. Think of it like having a security guard checking your code for common vulnerabilities. Keep this on unless you have a very good reason not to! |
+| Multi-processor Compilation | This lets Visual Studio use multiple CPU cores to build your program faster, like having multiple workers building different parts of your LEGO set at the same time. However, it doesn't work with precompiled headers (another speed-up technique). |
 
 {: .warning }
-Multi-processor Compilation is incompatible with Precompiled Headers. Disable one or the other.
+Multi-processor Compilation conflicts with Precompiled Headers. Choose one or disable /mp for PCH files.
+
+#### Code Generation Settings
+
+| Property | Description |
+|----------|-------------|
+| Basic Runtime Checks | These are like safety nets that catch common programming mistakes while your program is running. They can catch things like using uninitialized variables (trying to use a variable before giving it a value) or buffer overflows (trying to store too much data in a fixed space). These checks make your program run slower but are super helpful during development! |
+| Runtime Library | This is choosing how Windows features get included in your program. The Debug DLL version (/MDd) is best while developing - it includes all the checking code to help find bugs. The Release DLL version (/MD) is for your final program - it's faster but harder to debug. Static versions (/MT, /MTd) include everything in your .exe file, making it bigger but easier to distribute. |
+| Floating Point Precision | This affects how accurately your program handles decimal numbers. 'Precise' is like doing math with a calculator - you get exact answers but it's slower. 'Fast' is like doing math in your head - you get answers quickly but they might be slightly off. For most programs, stick with 'Precise' unless you know you need the speed boost. |
 
 {: .note }
-Using Warning Level 4 might generate many warnings initially but helps maintain high code quality.
+Runtime checks are valuable during development but impact performance. Consider your debug/release needs carefully.
 
-### Important Notes
-- It's recommended to use the highest warning level possible to catch potential issues early
-- Keep SDL checks enabled for better code security
-- When using MSVC, stick to the Program Database (PDB) format to avoid linking errors
-- Enable Multi-processor Compilation when not using Precompiled Headers to reduce build times (This can be worked around by disabling /mp on your pch.h and pch.cpp file)
+### Linker Configuration
 
-### C/C++ > Preprocessor
+#### General Settings
 
 | Property | Description |
 |----------|-------------|
-| Preprocessor Definitions | This property determines what preprocessor definitions you want to use. A preprocessor definition is a macro that is defined before the code is compiled. This is useful if you want to define a macro that is used in multiple source files. (I would recommend using preprocessor definitions sparingly, as they can make your code harder to read and can cause unexpected behaviour) |
+| Additional Library Directories | This tells Visual Studio where to find the library files (.lib files) that your program needs. It's like giving Visual Studio a map to find all the pre-built code you want to use. For example, if you're using SDL2, you need to tell Visual Studio where the SDL2.lib file is on your computer. |
+| Additional Dependencies | This is the list of actual library files your program needs to work. If Additional Library Directories is like giving directions to a library, this is like listing the specific books you need. For example, if you're using SDL2, you'd add 'SDL2.lib' here. Without the correct libraries listed here, your program won't build! |
 
-Thats really the only property I would recommend changing in the Preprocessor, as the rest are not really that important.
-
-### C/C++ > Code Generation
-
-C/C++ > Code Generation
-
-| Property | Description |
-|----------|-------------|
-| Basic Runtime Checks | Controls runtime error detection mechanisms:<br>• Stack Frame Checks - Detects stack pointer corruption<br>• Buffer Security Checks - Identifies buffer overflows<br>• Uninitialized Variables - Catches use of uninitialized memory<br>• Runtime Error Checks - General runtime error detection |
-| Runtime Library | Determines which C/C++ runtime library to link against:<br>• Multi-threaded Debug DLL (/MDd) - Default, links with MSVCRT debug DLL<br>• Multi-threaded Debug (/MTd) - Static linking with debug runtime<br>• Multi-threaded (/MT) - Static linking with release runtime<br>• Multi-threaded DLL (/MD) - Links with MSVCRT release DLL |
-| Floating Point Precision | Sets floating-point optimization level:<br>• Precise (/fp:precise) - Default, maintains strict floating-point semantics<br>• Fast (/fp:fast) - Enables aggressive optimizations, may affect accuracy<br>• Strict (/fp:strict) - Enforces strictest floating-point behaviour |
-
-{: .note }
-Runtime checks can impact performance. Consider your debug/release configuration needs carefully.
-
-### Usage Guidelines
-
-#### Runtime Checks
-- Keep enabled during development and debugging
-- Consider disabling specific checks in release builds for performance
-- Useful for catching memory corruption issues early
-
-{: .warning }
-Disabling runtime checks in debug builds can make certain bugs much harder to diagnose.
-
-#### Runtime Library Selection
-- `/MDd` (Debug DLL) - Recommended for development
-- `/MD` (Release DLL) - Standard for release builds
-- Use static linking (`/MT`, `/MTd`) when distributing standalone executables
-
-{: .note }
-Mixing different runtime libraries in the same project can lead to hard-to-diagnose crashes and memory corruption.
-
-#### Floating Point Precision
-- **Precise**: Scientific calculations, financial software
-- **Fast**: Games, graphics, non-critical calculations
-- **Strict**: When binary reproducibility is required
-
-{: .warning }
-Using `/fp:fast` can produce different results across different CPU architectures. Test thoroughly if portability is important.
-
-### Linker > General
-
-These properties are used to determine what libraries you want to link against. A library is a collection of object files that are linked into your project at compile time. This means that you dont need to distribute the library with your project.
-
-| Property | Description |
-|----------|-------------|
-| Additional Library Directories | This property determines what directories you want to include when linking your project. This is useful if you have libraries in a directory that is not in the source folder. Such as a directory that contains libraries for a library that you are using. |
-
-I would probably recommend leaving the rest of the properties in the Linker > General section alone, as they are fine left at their default values.
-
-### Linker > Input
-
-| Property | Description |
-|----------|-------------|
-| Additional Dependencies | This property determines what libraries you want to link against. This is useful if you have libraries that are not in the source folder. Such as a library that you are using. (eg. `SDL2.lib`) |
-
----
-
-## Common Issues
+## Troubleshooting Common Issues
 
 ### Linker Errors
-Linker errors often appear overwhelming due to their verbose output, but they typically have straightforward solutions. The most common cause is missing library dependencies. 
+
+Most linker errors stem from missing or misconfigured library dependencies. To resolve:
+
+1. Check Project Properties > Linker > Input
+2. Verify Additional Dependencies
+3. Confirm library paths in Library Directories
 
 {: .note }
-Most linker errors can be resolved by correctly configuring library dependencies and paths.
+Most linker errors resolve through proper library configuration.
 
-To resolve linker errors:
-1. Navigate to Project Properties > Linker > Input
-2. Add required libraries to the Additional Dependencies property
-3. Verify library paths are correct in Library Directories
+### Header File Issues
 
-### Missing Header Files
-When encountering missing header file errors, the compiler cannot locate necessary include files. 
+When encountering missing header errors:
 
-{: .warning }
-Case sensitivity matters in include paths on some platforms. Always verify exact filename casing.
-
-To resolve header file errors:
-1. Navigate to Project Properties > C/C++ > General
-2. Add the directory containing your header files to Additional Include Directories
-3. Verify header filenames and paths are correct in your #include statements
-
-### Symbol Not Found Errors
-Symbol not found errors typically occur when the linker cannot locate function or variable definitions.
-
-{: .note }
-Debug and Release builds use different library name suffixes (e.g., 'd' suffix for debug versions).
-
-To resolve symbol not found errors:
-1. Check that all required libraries are listed in Additional Dependencies
-2. Verify function declarations match their definitions
-3. Ensure libraries are compatible with your build configuration (Debug/Release)
-
-### Common Troubleshooting Tips
-- Make sure library and include paths use consistent forward/backward slashes
-- Check that library versions match your project's architecture (x86/x64)
-- Verify that imported libraries are built with compatible compiler settings
+1. Verify Project Properties > C/C++ > General
+2. Add header directories to Additional Include Directories
+3. Check header filename casing
 
 {: .warning }
-Mixing Debug and Release libraries can lead to runtime crashes that are difficult to diagnose.
-
----
+Header paths are case-sensitive on some platforms. Verify exact filename casing.
 
 ## Conclusion
 
-Now you know how to edit the project properties in Visual Studio. You can now start writing code for your project and hopefully not have to worry about the project properties again.
+This guide covers the essential project properties in Visual Studio. With these configurations understood, you can focus on writing code without frequent property adjustments.
 
-If you have any questions or suggestions, feel free to reach out to me either by [email](mailto: <alexmollard@protonmail.com>) or on [LinkedIn](https://www.linkedin.com/in/alex-mollard/), as im aware how confusing this can be for new users.
+For questions or suggestions, reach out via:
+- Email: [alexmollard@protonmail.com](mailto:alexmollard@protonmail.com)
+- LinkedIn: [LinkedIn Profile](https://www.linkedin.com/in/alex-mollard/)
