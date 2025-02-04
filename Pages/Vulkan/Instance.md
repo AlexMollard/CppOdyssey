@@ -53,20 +53,18 @@ vkCreateInstance(&createInfo, nullptr, &instance);
 {: .note }
 The `VkApplicationInfo` struct is used to give the Vulkan instance some information about your application, such as the name, version, and engine name.
 
-There are alot of fields in the `VkInstanceCreateInfo` struct, but most of them are optional. For the current example the only important field is `sType` which tells Vulkan what type of struct you are using.
-
-But below is a list of all the fields in the `VkInstanceCreateInfo` struct.
+The `VkInstanceCreateInfo` struct is used to specify parameters when creating a Vulkan instance. While many fields are optional, understanding each field is important for proper Vulkan initialization. Here's a comprehensive breakdown of all fields in the `VkInstanceCreateInfo` struct:
 
 | Member | Description |
 | --- | --- |
-| `sType` | The type of the struct. This must be `VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO` |
-| `pNext` | A pointer to the next struct in a linked list, or `nullptr` |
-| `flags` | The list of flags you can set are found [here](https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkInstanceCreateFlagBits.html). |
-| `pApplicationInfo` | A pointer to a `VkApplicationInfo` struct, or `nullptr` |
-| `enabledLayerCount` | The number of layers to enable |
-| `ppEnabledLayerNames` | A pointer to an array of layer names to enable, or `nullptr` |
-| `enabledExtensionCount` | The number of extensions to enable |
-| `ppEnabledExtensionNames` | A pointer to an array of extension names to enable, or `nullptr` |
+| `sType` | The type of the struct. This must be `VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO`. Required and cannot be omitted. |
+| `pNext` | Pointer to extension-specific structs, or `nullptr` if no extensions are needed. Can be used to enable instance-level features. |
+| `flags` | Instance creation flags. Valid values are found in `VkInstanceCreateFlags`. Currently, the only valid flag is `VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR` which is used for portable subset implementations. |
+| `pApplicationInfo` | Pointer to a `VkApplicationInfo` struct containing application-specific information. While optional (`nullptr` is valid), it's recommended to provide this for better driver optimization and debugging. |
+| `enabledLayerCount` | Number of global validation layers to enable. Must be 0 if `ppEnabledLayerNames` is `nullptr`. |
+| `ppEnabledLayerNames` | Pointer to an array of `enabledLayerCount` null-terminated strings containing the names of layers to enable. Common layers include `VK_LAYER_KHRONOS_validation`. |
+| `enabledExtensionCount` | Number of global extensions to enable. Must be 0 if `ppEnabledExtensionNames` is `nullptr`. |
+| `ppEnabledExtensionNames` | Pointer to an array of `enabledExtensionCount` null-terminated strings containing the names of extensions to enable. Common extensions include `VK_KHR_surface` for window system integration. |
 
 ---
 
